@@ -1,0 +1,16 @@
+package com.bedrockcloud.bedrockcloud.event;
+
+/*
+@author TeriumCloud
+ */
+public interface Listener {
+
+    /**
+     * Override this with your own logic e.g. if you want to toggle listeners during runtime.
+     *
+     * @return Boolean when the listener is active true else false
+     */
+    default boolean isActive() {
+        return true;
+    }
+}
