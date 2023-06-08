@@ -53,7 +53,7 @@ public class FileManager {
         } catch (Exception ignored) {}
     }
 
-    public static void deleteServer(final File file, final String serverName) {
+    public static void deleteServer(final File file, final String serverName, boolean isStatic) {
         try {
             final File Crashfile = new File("./temp/" + serverName + "/crashdumps/");
             final File dest_lib = new File("./archive/crashdumps/" + serverName + "/");
@@ -65,20 +65,22 @@ public class FileManager {
         }
 
         try {
-            if (file.isDirectory()) {
-                final String[] fileList = file.list();
-                if (fileList.length == 0) {
-                    file.delete();
-                } else {
-                    for (final String fileName : fileList) {
-                        final String fullPath = file.getPath() + "/" + fileName;
-                        final File fileOrFolder = new File(fullPath);
-                        delete(fileOrFolder);
+            if (!isStatic) {
+                if (file.isDirectory()) {
+                    final String[] fileList = file.list();
+                    if (fileList.length == 0) {
+                        file.delete();
+                    } else {
+                        for (final String fileName : fileList) {
+                            final String fullPath = file.getPath() + "/" + fileName;
+                            final File fileOrFolder = new File(fullPath);
+                            delete(fileOrFolder);
+                        }
+                        delete(file);
                     }
-                    delete(file);
+                } else {
+                    file.delete();
                 }
-            } else {
-                file.delete();
             }
         } catch (NullPointerException ignored){}
     }

@@ -22,7 +22,8 @@ public class json
     public static final int proxy = 6;
     public static final int type = 7;
     public static final int isLobby = 8;
-    public static final int ALL = 9;
+    public static final int isStatic = 9;
+    public static final int ALL = 10;
     
     public static Object get(final String name, final int type) throws IOException {
         final JSONParser jsonParser = new JSONParser();
@@ -37,45 +38,39 @@ public class json
                     final JSONObject tempobj = (JSONObject)tmp;
                     final JSONObject directtemp = (JSONObject) tempobj.get(name);
                     if (directtemp != null) {
-                        if (type != 9) {
+                        if (type != 10) {
                             switch (type) {
-                                case 0: {
+                                case 0 -> {
                                     returnval[0] = directtemp.get("minRunningServer");
-                                    continue;
                                 }
-                                case 1: {
+                                case 1 -> {
                                     returnval[0] = directtemp.get("maxRunningServer");
-                                    continue;
                                 }
-                                case 2: {
+                                case 2 -> {
                                     returnval[0] = directtemp.get("maxPlayer");
-                                    continue;
                                 }
-                                case 3: {
+                                case 3 -> {
                                     returnval[0] = directtemp.get("maintenance");
-                                    continue;
                                 }
-                                case 4: {
+                                case 4 -> {
                                     returnval[0] = directtemp.get("beta");
-                                    continue;
                                 }
-                                case 5: {
+                                case 5 -> {
                                     returnval[0] = directtemp.get("canBePrivate");
-                                    continue;
                                 }
-                                case 6: {
+                                case 6 -> {
                                     returnval[0] = directtemp.get("proxy");
-                                    continue;
                                 }
-                                case 7: {
+                                case 7 -> {
                                     returnval[0] = directtemp.get("type");
-                                    continue;
                                 }
-                                case 8: {
+                                case 8 -> {
                                     returnval[0] = directtemp.get("isLobby");
-                                    continue;
                                 }
-                                default: {
+                                case 9 -> {
+                                    returnval[0] = directtemp.get("isStatic");
+                                }
+                                default -> {
                                 }
                             }
                         } else {
@@ -88,6 +83,7 @@ public class json
                             stats.put("proxy", directtemp.get("proxy"));
                             stats.put("type", directtemp.get("type"));
                             stats.put("isLobby", directtemp.get("isLobby"));
+                            stats.put("isStatic", directtemp.get("isStatic"));
                         }
                     }
                 }

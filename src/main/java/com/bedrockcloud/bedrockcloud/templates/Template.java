@@ -23,10 +23,11 @@ public class Template implements Loggable
     public final Boolean isMaintenance;
     public final Boolean isLobby;
     public final Boolean canBePrivate;
+    public final Boolean isStatic;
     public HashMap<String, Template> runningTemplateServers;
     public HashMap<String, String> templatePlayer;
     
-    public Template(final String name, final Integer minRunningServer, final Integer maxRunningServer, final Integer maxPlayers, final Integer type, final Boolean isBeta, final Boolean isMaintenance, final Boolean isLobby, final Boolean canBePrivate) {
+    public Template(final String name, final Integer minRunningServer, final Integer maxRunningServer, final Integer maxPlayers, final Integer type, final Boolean isBeta, final Boolean isMaintenance, final Boolean isLobby, final Boolean canBePrivate, final Boolean isStatic) {
         this.name = name;
         this.minRunningServer = Math.round(minRunningServer);
         this.maxRunningServer = Math.round(maxRunningServer);
@@ -36,6 +37,7 @@ public class Template implements Loggable
         this.isMaintenance = isMaintenance;
         this.isLobby = isLobby;
         this.canBePrivate = canBePrivate;
+        this.isStatic = isStatic;
         if (!BedrockCloud.getTemplateProvider().existsTemplate(this.getName())) {
             BedrockCloud.getTemplateProvider().addTemplate(this);
         }
@@ -193,7 +195,11 @@ public class Template implements Loggable
     public Boolean getMaintenance() {
         return this.isMaintenance;
     }
-    
+
+    public Boolean getStatic() {
+        return isStatic;
+    }
+
     @Override
     public String toString() {
         return "Template{name='" + this.name + '\'' + ", minRunningServer=" + this.minRunningServer + ", maxRunningServer=" + this.maxRunningServer + ", maxPlayers=" + this.maxPlayers + ", type='" + this.type + '\'' + '}';

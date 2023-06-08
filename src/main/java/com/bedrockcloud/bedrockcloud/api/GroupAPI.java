@@ -73,6 +73,7 @@ public class GroupAPI implements Loggable
                                 object.put("beta", true);
                                 object.put("isLobby", false);
                                 object.put("canBePrivate", false);
+                                object.put("isStatic", false);
                                 object.put("proxy", "Proxy-Master");
                                 object.put("type", 1);
                                 final JSONObject temp = new JSONObject();

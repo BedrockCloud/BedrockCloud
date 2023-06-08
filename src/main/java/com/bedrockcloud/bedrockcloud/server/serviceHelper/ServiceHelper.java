@@ -83,7 +83,7 @@ public class ServiceHelper {
         }
 
         try {
-            FileManager.deleteServer(new File("./temp/" + server.getServerName()), server.getServerName());
+            FileManager.deleteServer(new File("./temp/" + server.getServerName()), server.getServerName(), server.getTemplate().getStatic());
         } catch (NullPointerException ex) {
             BedrockCloud.getLogger().exception(ex);
         }
@@ -122,7 +122,7 @@ public class ServiceHelper {
         }
 
         try {
-            FileManager.deleteServer(new File("./temp/" + server.getServerName()), server.getServerName());
+            FileManager.deleteServer(new File("./temp/" + server.getServerName()), server.getServerName(), server.getTemplate().getStatic());
         } catch (NullPointerException ex) {
             BedrockCloud.getLogger().exception(ex);
         }
@@ -161,7 +161,7 @@ public class ServiceHelper {
         }
 
         try {
-            FileManager.deleteServer(new File("./temp/" + server.getServerName()), server.getServerName());
+            FileManager.deleteServer(new File("./temp/" + server.getServerName()), server.getServerName(), server.getTemplate().getStatic());
         } catch (NullPointerException ex) {
             BedrockCloud.getLogger().exception(ex);
         }

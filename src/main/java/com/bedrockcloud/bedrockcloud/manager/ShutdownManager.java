@@ -24,33 +24,24 @@ public class ShutdownManager {
 
         for (final GameServer gameServer : BedrockCloud.getGameServerProvider().gameServerMap.values()) {
             gameServer.stopServer();
-            try {
-                gameServer.getSocket().disconnect();
-                gameServer.getSocket().close();
 
-                ServiceHelper.killWithPID(false, gameServer);
-            } catch (IOException ignored) {}
+            gameServer.getSocket().disconnect();
+            gameServer.getSocket().close();
         }
 
         for (final PrivateGameServer gameServer : BedrockCloud.getPrivateGameServerProvider().gameServerMap.values()) {
             gameServer.stopServer();
-            try {
-                gameServer.getSocket().disconnect();
-                gameServer.getSocket().close();
 
-                ServiceHelper.killWithPID(false, gameServer);
-            } catch (IOException ignored) {}
+            gameServer.getSocket().disconnect();
+            gameServer.getSocket().close();
         }
 
         for (final String proxy : BedrockCloud.getProxyServerProvider().proxyServerMap.keySet()) {
             final ProxyServer proxyServer = BedrockCloud.getProxyServerProvider().getProxyServer(proxy);
             proxyServer.stopServer();
-            try {
-                proxyServer.getSocket().disconnect();
-                proxyServer.getSocket().close();
 
-                ServiceHelper.killWithPID(false, proxyServer);
-            } catch (IOException ignored) {}
+            proxyServer.getSocket().disconnect();
+            proxyServer.getSocket().close();
         }
         try {
             BedrockCloud.getLogger().info("§cPlease wait until the cloud has been stopped.");

@@ -67,7 +67,7 @@ public class TemplateProvider implements Loggable
         for (final String name : GroupAPI.getGroups()) {
             try {
                 final HashMap<String, Object> stats = (HashMap<String, Object>) json.get(name, 9);
-                new Template(name, Math.toIntExact((Long) stats.get("minRunningServer")), Math.toIntExact((Long) stats.get("maxRunningServer")), Math.toIntExact((Long) stats.get("maxPlayer")), Math.toIntExact((Long) stats.get("type")), (Boolean) stats.get("beta"), (Boolean) stats.get("maintenance"), (Boolean) stats.get("isLobby"), (Boolean) stats.get("canBePrivate"));
+                new Template(name, Math.toIntExact((Long) stats.get("minRunningServer")), Math.toIntExact((Long) stats.get("maxRunningServer")), Math.toIntExact((Long) stats.get("maxPlayer")), Math.toIntExact((Long) stats.get("type")), (Boolean) stats.get("beta"), (Boolean) stats.get("maintenance"), (Boolean) stats.get("isLobby"), (Boolean) stats.get("canBePrivate"), (Boolean) stats.get("isStatic"));
             } catch (IOException e) {
                 BedrockCloud.getLogger().exception(e);
             }

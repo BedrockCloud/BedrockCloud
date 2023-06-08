@@ -149,6 +149,12 @@ public class PrivateGameServer
         final GameServerDisconnectPacket packet = new GameServerDisconnectPacket();
         packet.addValue("reason", "Server Stopped");
         this.pushPacket(packet);
+
+        try {
+            FileManager.deleteServer(new File("./temp/" + this.getServerName()), this.getServerName(), this.getTemplate().getStatic());
+        } catch (NullPointerException ex) {
+            BedrockCloud.getLogger().exception(ex);
+        }
     }
 
     public DatagramSocket getSocket() {
