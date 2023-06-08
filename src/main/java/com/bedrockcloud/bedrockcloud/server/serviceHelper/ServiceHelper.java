@@ -67,10 +67,6 @@ public class ServiceHelper {
         killWithPID(true, server);
     }
 
-    public static void killWithPID(ProxyServer server) throws IOException {
-        killWithPID(true, server);
-    }
-
     public static void killWithPID(boolean startNewService, GameServer server) throws IOException {
         String notifyMessage = MessageAPI.stoppedMessage.replace("%service", server.getServerName());
         CloudNotifyManager.sendNotifyCloud(notifyMessage);

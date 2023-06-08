@@ -70,10 +70,7 @@ public class ServerCommand extends Command
                             BedrockCloud.getLogger().error("The Server doesn't exist!");
                             return;
                         }
-                        try {
-                            ServiceHelper.killWithPID(server);
-                        } catch (IOException ignored) {
-                        }
+                        server.stopServer();
                     } else {
                         BedrockCloud.getLogger().warning("Try to execute: server stop <server>");
                     }

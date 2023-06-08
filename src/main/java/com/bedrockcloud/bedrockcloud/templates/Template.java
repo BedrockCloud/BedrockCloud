@@ -122,9 +122,7 @@ public class Template implements Loggable
                 if (server == null) {
                     return;
                 }
-                try {
-                    ServiceHelper.killWithPID(server);
-                } catch (Exception ignored){}
+                server.stopServer();
             }
         }
 
@@ -134,9 +132,7 @@ public class Template implements Loggable
                 if (server == null) {
                     return;
                 }
-                try {
-                    ServiceHelper.killWithPID(server);
-                } catch (Exception ignored){}
+                server.stopServer();
             }
         }
 
@@ -146,9 +142,7 @@ public class Template implements Loggable
                 if (server == null) {
                     return;
                 }
-                try {
-                    ServiceHelper.killWithPID(server);
-                } catch (Exception ignored){}
+                server.stopServer();
             }
         }
     }
@@ -163,9 +157,7 @@ public class Template implements Loggable
                 if (server == null) {
                     return;
                 }
-                try {
-                    ServiceHelper.killWithPID(false, server);
-                } catch (Exception ignored){}
+                server.stopServer();
             }
         }
 
@@ -175,9 +167,7 @@ public class Template implements Loggable
                 if (server == null) {
                     return;
                 }
-                try {
-                    ServiceHelper.killWithPID(false, server);
-                } catch (Exception ignored){}
+                server.stopServer();
             }
         }
 
@@ -187,9 +177,7 @@ public class Template implements Loggable
                 if (server == null) {
                     return;
                 }
-                try {
-                    ServiceHelper.killWithPID(false, server);
-                } catch (Exception ignored){}
+                server.stopServer();
             }
         }
     }

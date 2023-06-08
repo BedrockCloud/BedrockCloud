@@ -24,10 +24,7 @@ public class ProxyServerDisconnectPacket extends DataPacket
         final ProxyServer proxyServer = BedrockCloud.getProxyServerProvider().getProxyServer(serverName);
         if (proxyServer != null) {
             final Template template = proxyServer.getTemplate();
-            try {
-                ServiceHelper.killWithPID(proxyServer);
-            } catch (IOException ignored) {
-            }
+            proxyServer.stopServer();
         }
     }
 }

@@ -112,11 +112,6 @@ public class ProxyServer
         final ProxyServerDisconnectPacket packet = new ProxyServerDisconnectPacket();
         packet.addValue("reason", "Proxy Stopped");
         this.pushPacket(packet);
-
-        try {
-            ServiceHelper.killWithPID(this);
-        } catch (IOException ignored) {
-        }
     }
 
     public void pushPacket(final DataPacket cloudPacket) {

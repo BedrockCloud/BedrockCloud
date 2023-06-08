@@ -23,10 +23,7 @@ public class StopServerPacket extends DataPacket
         if (server == null) {
             BedrockCloud.getLogger().error("This Server doesn't exist");
         } else {
-            try {
-                ServiceHelper.killWithPID(server);
-            } catch (IOException e) {
-            }
+            server.stopServer();
         }
     }
 }

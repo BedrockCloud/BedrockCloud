@@ -135,11 +135,6 @@ public class GameServer
         final GameServerDisconnectPacket packet = new GameServerDisconnectPacket();
         packet.addValue("reason", "Server Stopped");
         this.pushPacket(packet);
-
-        try {
-            ServiceHelper.killWithPID(this);
-        } catch (IOException ignored) {
-        }
     }
 
     public DatagramSocket getSocket() {

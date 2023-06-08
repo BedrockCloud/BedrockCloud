@@ -37,11 +37,6 @@ public class GameServerDisconnectPacket extends DataPacket
                 packet.addValue("serverName", serverName);
                 proxy.pushPacket(packet);
             }
-            try {
-                ServiceHelper.killWithPID(gameServer);
-            } catch (IOException e) {
-                BedrockCloud.getLogger().exception(e);
-            }
         } else {
             final PrivateGameServer gameServer = BedrockCloud.getPrivateGameServerProvider().getGameServer(serverName);
             gameServer.setAliveChecks(0);
@@ -56,11 +51,6 @@ public class GameServerDisconnectPacket extends DataPacket
             String notifyMessage = MessageAPI.stoppedMessage.replace("%service", gameServer.getServerName());
             CloudNotifyManager.sendNotifyCloud(notifyMessage);
             BedrockCloud.getLogger().warning(notifyMessage);
-            try {
-                ServiceHelper.killWithPID(gameServer);
-            } catch (IOException e) {
-                BedrockCloud.getLogger().exception(e);
-            }
         }
     }
 }
