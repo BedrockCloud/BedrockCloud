@@ -104,7 +104,6 @@ public class Startfiles implements Loggable
                     put("enable-cloudlog-file", false);
                     put("use-proxy", true);
                     put("auto-restart-cloud", false);
-                    put("version", Objects.requireNonNull(BedrockCloud.getVersion()).version());
                     put("rest-password", PasswordAPI.generateRandomPassword(8));
                     put("rest-port", 8080);
                     put("rest-username", "cloud");
