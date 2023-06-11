@@ -3,6 +3,7 @@ package com.bedrockcloud.bedrockcloud.files;
 import com.bedrockcloud.bedrockcloud.BedrockCloud;
 import com.bedrockcloud.bedrockcloud.api.PasswordAPI;
 import com.bedrockcloud.bedrockcloud.config.Config;
+import com.bedrockcloud.bedrockcloud.config.ConfigSection;
 import com.bedrockcloud.bedrockcloud.console.Loggable;
 import com.bedrockcloud.bedrockcloud.api.GroupAPI;
 import com.bedrockcloud.bedrockcloud.SoftwareManager;
@@ -93,26 +94,23 @@ public class Startfiles implements Loggable
             }
 
             final File file = new File("./local/config.json");
-            final Config config = new Config(file, Config.JSON);
-            if (config.get("port") == null) config.set("port", (double)PortValidator.getFreeCloudPort());
-            if (config.get("debug-mode") == null) config.set("debug-mode", false);
-            if (config.get("motd") == null) config.set("motd", "Default BedrockCloud service");
-            if (config.get("auto-update-on-start") == null) config.set("auto-update-on-start", false);
-            if (config.get("wdpe-login-extras") == null) config.set("wdpe-login-extras", false);
-            if (config.get("enable-cloudlog-file") == null) config.set("enable-cloudlog-file", false);
-            if (config.get("use-proxy") == null) config.set("use-proxy", true);
-            if (config.get("auto-restart-cloud") == null) config.set("auto-restart-cloud", false);
-
-            if (config.get("version") == null){
-                config.set("version", Objects.requireNonNull(BedrockCloud.getVersion()).version());
-            } else if (!config.get("version").equals(Objects.requireNonNull(BedrockCloud.getVersion()).version())) {
-                config.set("version", BedrockCloud.getVersion().version());
-            }
-
-            if (config.get("rest-password") == null) config.set("rest-password", PasswordAPI.generateRandomPassword(8));
-            if (config.get("rest-port") == null) config.set("rest-port", 8080);
-            if (config.get("rest-username") == null) config.set("rest-username", "cloud");
-            if (config.get("rest-enabled") == null) config.set("rest-enabled", true);
+            final Config config = new Config(file, Config.JSON, new ConfigSection() {
+                {
+                    put("port", (double)PortValidator.getFreeCloudPort());
+                    put("debug-mode", false);
+                    put("motd", "Default BedrockCloud Service");
+                    put("auto-update-on-start", false);
+                    put("wdpe-login-extras", false);
+                    put("enable-cloudlog-file", false);
+                    put("use-proxy", true);
+                    put("auto-restart-cloud", false);
+                    put("version", Objects.requireNonNull(BedrockCloud.getVersion()).version());
+                    put("rest-password", PasswordAPI.generateRandomPassword(8));
+                    put("rest-port", 8080);
+                    put("rest-username", "cloud");
+                    put("rest-enabled", true);
+                }
+            });
             config.save();
 
             final File pocketmineFile = new File("./local/versions/pocketmine/PocketMine-MP.phar");

@@ -8,8 +8,11 @@ import java.net.URL;
 public class SoftwareManager
 {
 
+    //Software URLs
     public final static String POCKETMINE_URL = "https://github.com/pmmp/PocketMine-MP/releases/latest/download/PocketMine-MP.phar";
     public final static String WATERDOGPE_URL = "https://github.com/WaterdogPE/WaterdogPE/releases/latest/download/Waterdog.jar";
+
+    //Plugin URLs
     public final static String CLOUDBRIDGEPM_URL = "https://github.com/BedrockCloud/CloudBridge-PM/releases/latest/download/CloudBridge.phar";
     public final static String DEVTOOLS_URL = "https://poggit.pmmp.io/r/199538/PocketMine-DevTools_dev-217.phar";
     public final static String CLOUDBRIDGEWD_URL = "https://github.com/BedrockCloud/CloudBridge-WD/releases/latest/download/BedrockProxyCore.jar";

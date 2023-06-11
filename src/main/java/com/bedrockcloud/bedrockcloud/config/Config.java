@@ -104,7 +104,6 @@ public class Config
     }
 
 
-    @Deprecated
     public Config( File file, int type, LinkedHashMap<String, Object> defaultMap ) {
         this( file.toString(), type, new ConfigSection( defaultMap ) );
     }
