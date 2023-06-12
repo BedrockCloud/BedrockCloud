@@ -1,7 +1,7 @@
 package com.bedrockcloud.bedrockcloud.event;
 
-/*
-@author TeriumCloud
+/**
+ * @author TeriumCloud
  */
 public abstract class Cancellable extends Event {
 
