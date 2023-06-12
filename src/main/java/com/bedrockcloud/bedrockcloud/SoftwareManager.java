@@ -1,12 +1,14 @@
 package com.bedrockcloud.bedrockcloud;
 
-import java.io.IOException;
 import java.io.FileOutputStream;
-import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
-public class SoftwareManager
-{
+public class SoftwareManager {
 
     //Software URLs
     public final static String POCKETMINE_URL = "https://github.com/pmmp/PocketMine-MP/releases/latest/download/PocketMine-MP.phar";
@@ -19,39 +21,13 @@ public class SoftwareManager
 
     public static boolean download(final String url, final String destinationPath) {
         try {
-            final BufferedInputStream inputStream = new BufferedInputStream(new URL(url).openStream());
-            try {
-                final FileOutputStream fileOS = new FileOutputStream(destinationPath);
-                try {
-                    final byte[] data = new byte[1024];
-                    int byteContent;
-                    while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
-                        fileOS.write(data, 0, byteContent);
-                    }
-                    fileOS.close();
-                }
-                catch (Throwable t) {
-                    try {
-                        fileOS.close();
-                    }
-                    catch (Throwable exception) {
-                        t.addSuppressed(exception);
-                    }
-                    throw t;
-                }
-                inputStream.close();
-            }
-            catch (Throwable t2) {
-                try {
-                    inputStream.close();
-                }
-                catch (Throwable exception2) {
-                    t2.addSuppressed(exception2);
-                }
-                throw t2;
-            }
-        }
-        catch (IOException e) {
+            URL downloadUrl = new URL(url);
+            InputStream inputStream = downloadUrl.openStream();
+            Path destination = Path.of(destinationPath);
+
+            Files.copy(inputStream, destination, StandardCopyOption.REPLACE_EXISTING);
+            inputStream.close();
+        } catch (IOException e) {
             BedrockCloud.getLogger().exception(e);
             return false;
         }
