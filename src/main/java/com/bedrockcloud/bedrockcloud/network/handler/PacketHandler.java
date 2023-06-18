@@ -65,7 +65,7 @@ public class PacketHandler implements Loggable
     }
 
     public void handleCloudPacket(final JSONObject jsonObject, final ClientRequest clientRequest) {
-        if (this.isLocalHost(clientRequest)) {
+        if (this.isLocalHost(clientRequest) && clientRequest.isAlive()) {
             if (jsonObject.get("packetName") != null) {
                 final String packetName = jsonObject.get("packetName").toString();
                 final Class c = this.getPacketByName(packetName);
