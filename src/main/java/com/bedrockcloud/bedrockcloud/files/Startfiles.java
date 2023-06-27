@@ -95,22 +95,18 @@ public class Startfiles implements Loggable
 
             final File file = new File("./local/config.json");
             final Config config = new Config(file, Config.JSON);
-            config.setAll(new ConfigSection() {
-                {
-                    put("port", (double)PortValidator.getFreeCloudPort());
-                    put("debug-mode", false);
-                    put("motd", "Default BedrockCloud Service");
-                    put("auto-update-on-start", false);
-                    put("wdpe-login-extras", false);
-                    put("enable-cloudlog-file", false);
-                    put("use-proxy", true);
-                    put("auto-restart-cloud", false);
-                    put("rest-password", PasswordAPI.generateRandomPassword(8));
-                    put("rest-port", 8080);
-                    put("rest-username", "cloud");
-                    put("rest-enabled", true);
-                }
-            });
+            config.set("port", (double)PortValidator.getFreeCloudPort());
+            config.set("debug-mode", false);
+            config.set("motd", "Default BedrockCloud Service");
+            config.set("auto-update-on-start", false);
+            config.set("wdpe-login-extras", false);
+            config.set("enable-cloudlog-file", false);
+            config.set("use-proxy", true);
+            config.set("auto-restart-cloud", false);
+            config.set("rest-password", PasswordAPI.generateRandomPassword(8));
+            config.set("rest-port", 8080);
+            config.set("rest-username", "cloud");
+            config.set("rest-enabled", true);
             config.save();
 
             final File pocketmineFile = new File("./local/versions/pocketmine/PocketMine-MP.phar");
