@@ -54,11 +54,6 @@ public class BedrockCloud
         running = true;
         Runtime.getRuntime().addShutdownHook(new ShutdownThread());
 
-        Config config = getConfig();
-
-        config.set("version", Objects.requireNonNull(getVersion()).version());
-        config.save();
-
         this.initProvider();
 
         CommandRegeistry.registerCommands();
