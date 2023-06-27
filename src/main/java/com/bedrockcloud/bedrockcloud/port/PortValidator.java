@@ -18,9 +18,10 @@ public final class PortValidator {
 
     public static int getFreeCloudPort() {
         var port = PORTS_BOUNCE_CLOUD;
-        while (isPortUsed(port) || isPortUsed(port+1)) {
+        while (isCloudPortUsed(port) || isCloudPortUsed(port+1)) {
             port++;
         }
+
         return port;
     }
 
@@ -66,6 +67,16 @@ public final class PortValidator {
         for (final var service : BedrockCloud.getProxyServerProvider().proxyServerMap.values()) {
             if (service.getServerPort() == port || service.getServerPort()+1 == port) return true;
         }
+
+        try (final var serverSocket = new DatagramSocket(port)) {
+            serverSocket.close();
+            return false;
+        } catch (Exception exception) {
+            return true;
+        }
+    }
+
+    private static boolean isCloudPortUsed(int port){
         try (final var serverSocket = new DatagramSocket(port)) {
             serverSocket.close();
             return false;

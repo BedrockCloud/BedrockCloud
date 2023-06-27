@@ -16,8 +16,11 @@ import java.util.Objects;
 public class Startfiles implements Loggable
 {
     private final ArrayList<String> directorys;
-    
-    public Startfiles() {
+    private int cloudPort;
+
+    public Startfiles(int cloudPort) {
+        this.cloudPort = cloudPort;
+
         this.directorys = new ArrayList<String>();
         try {
             this.delete(new File("./temp"));
@@ -93,26 +96,24 @@ public class Startfiles implements Loggable
                 templatesc.createNewFile();
             }
 
-            final File file = new File("./local/config.json");
+            final File file = new File("./local/config.yml");
 
             if (!file.exists()) {
-                file.createNewFile();
+                Config config = new Config(file, Config.YAML);
+                config.set("port", (double)this.cloudPort);
+                config.set("debug-mode", false);
+                config.set("motd", "Default BedrockCloud Service");
+                config.set("auto-update-on-start", false);
+                config.set("wdpe-login-extras", false);
+                config.set("enable-cloudlog-file", false);
+                config.set("use-proxy", true);
+                config.set("auto-restart-cloud", false);
+                config.set("rest-password", PasswordAPI.generateRandomPassword(8));
+                config.set("rest-port", 8080.0);
+                config.set("rest-username", "cloud");
+                config.set("rest-enabled", true);
+                config.save(file);
             }
-
-            final Config config = new Config("./local/config.json", Config.JSON);
-            config.set("port", (double)PortValidator.getFreeCloudPort());
-            config.set("debug-mode", false);
-            config.set("motd", "Default BedrockCloud Service");
-            config.set("auto-update-on-start", false);
-            config.set("wdpe-login-extras", false);
-            config.set("enable-cloudlog-file", false);
-            config.set("use-proxy", true);
-            config.set("auto-restart-cloud", false);
-            config.set("rest-password", PasswordAPI.generateRandomPassword(8));
-            config.set("rest-port", 8080);
-            config.set("rest-username", "cloud");
-            config.set("rest-enabled", true);
-            config.save();
 
             final File pocketmineFile = new File("./local/versions/pocketmine/PocketMine-MP.phar");
             final File waterdogFile = new File("./local/versions/waterdogpe/WaterdogPE.jar");
@@ -160,12 +161,11 @@ public class Startfiles implements Loggable
                     this.getLogger().debug("Download server is offline.");
                 }
             }
-
-            BedrockCloud.getLogger().info("§aPlease wait a short time.");
-            Thread.sleep(3000);
-
             GroupAPI.createGroup("Proxy-Master", 0);
             GroupAPI.createGroup("Lobby", 1);
+
+            BedrockCloud.getLogger().info("§aStarting cloud...");
+            Thread.sleep(3000);
         } catch (Exception e) {
             this.getLogger().exception(e);
         }

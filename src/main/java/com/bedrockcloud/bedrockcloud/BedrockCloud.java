@@ -110,7 +110,7 @@ public class BedrockCloud
     }
     
     public static Config getConfig() {
-        return new Config("./local/config.json", Config.JSON);
+        return new Config("./local/config.yml", Config.YAML);
     }
 
     public static Config getTemplateConfig() {

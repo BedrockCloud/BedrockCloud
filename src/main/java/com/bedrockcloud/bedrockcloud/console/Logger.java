@@ -53,7 +53,7 @@ public class Logger
         System.out.println(Colors.toColor("§7[§b" + dateTime.format(dateTimeFormatter) + "§7] " + "§7[§r" + prefix + "§7]§r §8» §r" + message + "§r"));
         try {
 
-            File file = new File("./local/config.json");
+            File file = new File("./local/config.yml");
             if (!file.exists()) return;
             if (!BedrockCloud.getConfig().getBoolean("enable-cloudlog-file")) return;
             FileWriter cloudLogWriter;

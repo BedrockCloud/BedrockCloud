@@ -26,7 +26,7 @@ public class ServiceHelper {
         }
         for (final String name : GroupAPI.getGroups()) {
             try {
-                final HashMap<String, Object> stats = (HashMap<String, Object>) json.get(name, 9);
+                final HashMap<String, Object> stats = (HashMap<String, Object>) json.get(name, 10);
                 if (Integer.parseInt(stats.get("type").toString()) == 0) {
                     final Template group = BedrockCloud.getTemplateProvider().getTemplate(name);
                     if (group != null) {
@@ -44,7 +44,7 @@ public class ServiceHelper {
     public static void startAllServers() {
         for (final String name : GroupAPI.getGroups()) {
             try {
-                final HashMap<String, Object> stats = (HashMap<String, Object>) json.get(name, 9);
+                final HashMap<String, Object> stats = (HashMap<String, Object>) json.get(name, 10);
                 if (Integer.parseInt(stats.get("type").toString()) == 1) {
                     final Template group = BedrockCloud.getTemplateProvider().getTemplate(name);
                     if (group != null) {

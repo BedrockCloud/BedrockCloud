@@ -1,6 +1,7 @@
 package com.bedrockcloud.bedrockcloud;
 
 import com.bedrockcloud.bedrockcloud.files.Startfiles;
+import com.bedrockcloud.bedrockcloud.port.PortValidator;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -47,17 +48,13 @@ public class CloudStarter {
                     BedrockCloud.getLogger().info("§cYou are currently using a development version of BedrockCloud. Errors may occur.");
                 }
             } catch (IOException ignored){}
+            new Startfiles(PortValidator.getFreeCloudPort());
 
-            new Startfiles();
-            try {
-                Thread.sleep(2000L);
-            } catch (InterruptedException e) {
-                BedrockCloud.getLogger().exception(e);
-            }
+            Thread.sleep(3000);
             new BedrockCloud();
-
         }catch (ClassNotFoundException ex) {
             BedrockCloud.getLogger().exception(ex);
+        } catch (InterruptedException ignored) {
         }
     }
 
