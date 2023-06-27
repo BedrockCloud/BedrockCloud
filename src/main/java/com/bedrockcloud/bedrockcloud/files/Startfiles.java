@@ -94,7 +94,8 @@ public class Startfiles implements Loggable
             }
 
             final File file = new File("./local/config.json");
-            final Config config = new Config(file, Config.JSON, new ConfigSection() {
+            final Config config = new Config(file, Config.JSON);
+            config.setAll(new ConfigSection() {
                 {
                     put("port", (double)PortValidator.getFreeCloudPort());
                     put("debug-mode", false);
