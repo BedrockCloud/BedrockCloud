@@ -16,7 +16,7 @@ public class SoftwareManager {
 
     //Plugin URLs
     public final static String CLOUDBRIDGEPM_URL = "https://github.com/BedrockCloud/CloudBridge-PM/releases/latest/download/CloudBridge.phar";
-    public final static String DEVTOOLS_URL = "https://poggit.pmmp.io/r/199538/PocketMine-DevTools_dev-217.phar";
+    public final static String DEVTOOLS_URL = "https://poggit.pmmp.io/r/208640/PocketMine-DevTools.phar";
     public final static String CLOUDBRIDGEWD_URL = "https://github.com/BedrockCloud/CloudBridge-WD/releases/latest/download/BedrockProxyCore.jar";
 
     public static boolean download(final String url, final String destinationPath) {
