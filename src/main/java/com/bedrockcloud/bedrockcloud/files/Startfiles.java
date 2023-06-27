@@ -94,7 +94,12 @@ public class Startfiles implements Loggable
             }
 
             final File file = new File("./local/config.json");
-            final Config config = new Config(file, Config.JSON);
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            final Config config = new Config("./local/config.json", Config.JSON);
             config.set("port", (double)PortValidator.getFreeCloudPort());
             config.set("debug-mode", false);
             config.set("motd", "Default BedrockCloud Service");
