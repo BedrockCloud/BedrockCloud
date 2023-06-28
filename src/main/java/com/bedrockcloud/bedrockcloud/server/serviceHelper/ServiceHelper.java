@@ -64,6 +64,10 @@ public class ServiceHelper {
     }
 
     public static void killWithPID(PrivateGameServer server) throws IOException {
+        killWithPID(false, server);
+    }
+
+    public static void killWithPID(ProxyServer server) throws IOException {
         killWithPID(true, server);
     }
 
@@ -101,7 +105,7 @@ public class ServiceHelper {
         if (!startNewService) return;
         if (BedrockCloud.getTemplateProvider().isTemplateRunning(server.getTemplate())) {
             if (server.getTemplate().getRunningTemplateServers().size() < server.getTemplate().getMinRunningServer()) {
-                new ProxyServer(server.getTemplate());
+                new GameServer(server.getTemplate());
             }
         }
     }
@@ -140,7 +144,7 @@ public class ServiceHelper {
         if (!startNewService) return;
         if (BedrockCloud.getTemplateProvider().isTemplateRunning(server.getTemplate())) {
             if (server.getTemplate().getRunningTemplateServers().size() < server.getTemplate().getMinRunningServer()) {
-                new ProxyServer(server.getTemplate());
+                new PrivateGameServer(server.getTemplate(), server.getServerOwner());
             }
         }
     }

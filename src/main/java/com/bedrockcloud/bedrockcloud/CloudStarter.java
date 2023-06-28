@@ -9,7 +9,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-@VersionInfo(name = "BedrockCloud", version = "3.1.2", developers = { "BedrockCloud" }, identifier = "@Beta")
+@VersionInfo(name = "BedrockCloud", version = "3.1.2", developers = { "BedrockCloud" }, identifier = "@Stable")
 public class CloudStarter {
     public static void main(String[] args) {
         try {
