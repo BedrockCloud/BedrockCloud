@@ -5,7 +5,7 @@ name: Maven Build
 
 on:
   push:
-    branches: [ "master", "dev/3.1" ]
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -24,13 +24,3 @@ jobs:
         with:
           name: bedrockcloud
           path: target/BedrockCloud.jar
-      - name: Upload release
-        if: startsWith(github.event.head_commit.message, 'RC ')
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "RC-(${{ github.run_number }})"
-          prerelease: true
-          title: "RC-(${{ github.run_number }})"
-          files: |
-            target/BedrockCloud.jar
