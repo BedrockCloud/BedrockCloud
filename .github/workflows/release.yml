@@ -22,7 +22,7 @@ jobs:
       - name: Get data
         id: metadata
         run: |
-          echo ::set-output name=VERSION::$(php -r 'echo explode("+", explode("-", yaml_parse_file(getcwd() . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "version.yml")["version"])[0])[0];')
+          echo ::set-output name=VERSION::$(php -r 'echo explode("+", explode("-", yaml_parse_file(getcwd() . DIRECTORY_SEPARATOR . "src/main/resources/version.yml")["version"])[0])[0];')
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
