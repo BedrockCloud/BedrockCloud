@@ -53,6 +53,7 @@ public class GameServerInfoRequestPacket extends DataPacket
             gameServerInfoResponsePacket.isMaintenance = server.getTemplate().getMaintenance();
             gameServerInfoResponsePacket.isPrivate = false;
             gameServerInfoResponsePacket.isBeta = server.getTemplate().getBeta();
+            gameServerInfoResponsePacket.isStatic = server.getTemplate().getStatic();
             gameServerInfoResponsePacket.playerCount = server.getPlayerCount();
             gameServerInfoResponsePacket.maxPlayer = server.getTemplate().getMaxPlayers();
             BedrockCloud.getPrivateGameServerProvider().getGameServer(jsonObject.get("serverName").toString()).pushPacket(gameServerInfoResponsePacket);

@@ -18,6 +18,7 @@ public class GameServerInfoResponsePacket extends RequestPacket
     public boolean isPrivate;
     public boolean isMaintenance;
     public boolean isBeta;
+    public boolean isStatic;
     public int playerCount;
     public int maxPlayer;
     
@@ -35,6 +36,7 @@ public class GameServerInfoResponsePacket extends RequestPacket
         this.addValue("isPrivate", this.isPrivate);
         this.addValue("isMaintenance", this.isMaintenance);
         this.addValue("isBeta", this.isBeta);
+        this.addValue("isStatic", this.isStatic);
         final JSONArray arr = new JSONArray();
         try {
             for (final CloudPlayer key : BedrockCloud.getCloudPlayerProvider().cloudPlayerMap.values()) {
