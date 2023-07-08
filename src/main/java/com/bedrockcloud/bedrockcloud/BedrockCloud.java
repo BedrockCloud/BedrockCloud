@@ -19,7 +19,6 @@ import com.bedrockcloud.bedrockcloud.console.Logger;
 
 import java.net.URISyntaxException;
 import java.net.Socket;
-import java.util.Objects;
 import java.util.Timer;
 
 public class BedrockCloud
