@@ -17,6 +17,8 @@ import com.bedrockcloud.bedrockcloud.api.MessageAPI;
 
 import java.io.*;
 import java.net.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Objects;
 
 public class PrivateGameServer
@@ -33,6 +35,7 @@ public class PrivateGameServer
     public final String servers_path = "./temp/";
     public String serverOwner = null;
     public PrivateKeepALiveTask task = null;
+    private boolean isConnected = false;
 
     public PrivateGameServer(final Template template, String serverOwner) {
         this.template = template;
@@ -53,6 +56,14 @@ public class PrivateGameServer
         } catch (InterruptedException e) {
             BedrockCloud.getLogger().exception(e);
         }
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
+    }
+
+    public boolean isConnected() {
+        return isConnected;
     }
 
     public PrivateKeepALiveTask getTask() {
@@ -102,6 +113,8 @@ public class PrivateGameServer
             } catch (Exception e) {
                 BedrockCloud.getLogger().exception(e);
             }
+
+            waitForConnection(10);
         } else {
             String notifyMessage = MessageAPI.startFailed.replace("%service", serverName);
             CloudNotifyManager.sendNotifyCloud(notifyMessage);
@@ -114,6 +127,22 @@ public class PrivateGameServer
                 playerTextPacket.type = 0;
                 playerTextPacket.value = BedrockCloud.prefix + "§cYour server can't be started, please try again.";
                 BedrockCloud.getCloudPlayerProvider().getCloudPlayer(getServerName()).getProxy().pushPacket(playerTextPacket);
+            }
+        }
+    }
+
+    private void waitForConnection(int timeoutSeconds) {
+        Instant startTime = Instant.now();
+        Duration timeoutDuration = Duration.ofSeconds(timeoutSeconds);
+
+        while (Instant.now().isBefore(startTime.plus(timeoutDuration))) {
+            if (this.isConnected()) {
+                return;
+            } else {
+                FileManager.deleteServer(new File("./temp/" + serverName), serverName, this.getTemplate().getStatic());
+                String errorMessage = MessageAPI.startFailed.replace("%service", serverName);
+                CloudNotifyManager.sendNotifyCloud(errorMessage);
+                BedrockCloud.getLogger().error(errorMessage);
             }
         }
     }

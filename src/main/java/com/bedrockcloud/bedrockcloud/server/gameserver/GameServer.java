@@ -12,6 +12,8 @@ import com.bedrockcloud.bedrockcloud.network.DataPacket;
 import com.bedrockcloud.bedrockcloud.network.packets.GameServerDisconnectPacket;
 
 import java.net.*;
+import java.time.Duration;
+import java.time.Instant;
 
 import com.bedrockcloud.bedrockcloud.server.properties.ServerProperties;
 import com.bedrockcloud.bedrockcloud.server.serviceHelper.ServiceHelper;
@@ -32,6 +34,7 @@ public class GameServer
     private final String temp_path = "./templates/";
     private final String servers_path = "./temp/";
     public KeepALiveTask task = null;
+    private boolean isConnected = false;
     
     public GameServer(final Template template) {
         this.template = template;
@@ -48,10 +51,17 @@ public class GameServer
         this.copyServer();
         try {
             this.startServer();
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             BedrockCloud.getLogger().exception(e);
         }
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
+    }
+
+    public boolean isConnected() {
+        return isConnected;
     }
 
     public int getPid() {
@@ -97,10 +107,28 @@ public class GameServer
             } catch (Exception e) {
                 BedrockCloud.getLogger().exception(e);
             }
+
+            waitForConnection(10);
         } else {
             String notifyMessage = MessageAPI.startFailed.replace("%service", serverName);
             CloudNotifyManager.sendNotifyCloud(notifyMessage);
             BedrockCloud.getLogger().error(notifyMessage);
+        }
+    }
+
+    private void waitForConnection(int timeoutSeconds) {
+        Instant startTime = Instant.now();
+        Duration timeoutDuration = Duration.ofSeconds(timeoutSeconds);
+
+        while (Instant.now().isBefore(startTime.plus(timeoutDuration))) {
+            if (this.isConnected()) {
+                return;
+            } else {
+                FileManager.deleteServer(new File("./temp/" + serverName), serverName, this.getTemplate().getStatic());
+                String errorMessage = MessageAPI.startFailed.replace("%service", serverName);
+                CloudNotifyManager.sendNotifyCloud(errorMessage);
+                BedrockCloud.getLogger().error(errorMessage);
+            }
         }
     }
     

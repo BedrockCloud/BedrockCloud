@@ -47,5 +47,6 @@ public class ProxyServerConnectPacket extends DataPacket implements Loggable
                 }
             }
         }
+        proxyServer.setConnected(true);
     }
 }

@@ -63,6 +63,7 @@ public class GameServerConnectPacket extends DataPacket
             BedrockCloud.getLogger().warning(notifyMessage);
 
             gameServer.getTemplate().addServer(gameServer.getTemplate(), serverName);
+            gameServer.setConnected(true);
         } else {
             final PrivateGameServer gameServer = BedrockCloud.getPrivateGameServerProvider().getGameServer(serverName);
             gameServer.setSocket(clientRequest.getSocket());
@@ -93,6 +94,7 @@ public class GameServerConnectPacket extends DataPacket
             BedrockCloud.getLogger().warning(notifyMessage);
 
             gameServer.getTemplate().addServer(gameServer.getTemplate(), serverName);
+            gameServer.setConnected(true);
 
             if (BedrockCloud.getCloudPlayerProvider().existsPlayer(gameServer.getServerOwner())) {
                 BedrockCloud.getCloudPlayerProvider().getCloudPlayer(gameServer.getServerOwner()).setHasPrivateServer(true);

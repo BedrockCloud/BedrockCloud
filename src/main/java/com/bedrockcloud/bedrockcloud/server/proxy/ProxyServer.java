@@ -18,6 +18,8 @@ import java.io.*;
 import com.bedrockcloud.bedrockcloud.network.packets.ProxyServerDisconnectPacket;
 
 import java.net.*;
+import java.time.Duration;
+import java.time.Instant;
 
 public class ProxyServer
 {
@@ -29,6 +31,7 @@ public class ProxyServer
     public final String servers_path = "./temp/";
     public int pid;
     public int socketPort;
+    private boolean isConnected = false;
 
     public ProxyServer(final Template template) {
         this.template = template;
@@ -47,6 +50,14 @@ public class ProxyServer
         catch (InterruptedException e) {
             BedrockCloud.getLogger().exception(e);
         }
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
+    }
+
+    public boolean isConnected() {
+        return isConnected;
     }
 
     public Template getTemplate() {
@@ -97,10 +108,28 @@ public class ProxyServer
             } catch (Exception e) {
                 BedrockCloud.getLogger().exception(e);
             }
+
+            waitForConnection(10);
         } else {
             String notifyMessage = MessageAPI.startFailed.replace("%service", serverName);
             CloudNotifyManager.sendNotifyCloud(notifyMessage);
             BedrockCloud.getLogger().warning(notifyMessage);
+        }
+    }
+
+    private void waitForConnection(int timeoutSeconds) {
+        Instant startTime = Instant.now();
+        Duration timeoutDuration = Duration.ofSeconds(timeoutSeconds);
+
+        while (Instant.now().isBefore(startTime.plus(timeoutDuration))) {
+            if (this.isConnected()) {
+                return;
+            } else {
+                FileManager.deleteServer(new File("./temp/" + serverName), serverName, this.getTemplate().getStatic());
+                String errorMessage = MessageAPI.startFailed.replace("%service", serverName);
+                CloudNotifyManager.sendNotifyCloud(errorMessage);
+                BedrockCloud.getLogger().error(errorMessage);
+            }
         }
     }
 
