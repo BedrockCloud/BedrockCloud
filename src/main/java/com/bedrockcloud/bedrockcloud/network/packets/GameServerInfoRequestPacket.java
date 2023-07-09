@@ -38,6 +38,7 @@ public class GameServerInfoRequestPacket extends DataPacket
             gameServerInfoResponsePacket.isBeta = server.getTemplate().getBeta();
             gameServerInfoResponsePacket.playerCount = server.getPlayerCount();
             gameServerInfoResponsePacket.maxPlayer = server.getTemplate().getMaxPlayers();
+            gameServerInfoResponsePacket.isStatic = server.getTemplate().getStatic();
             BedrockCloud.getGameServerProvider().getGameServer(jsonObject.get("serverName").toString()).pushPacket(gameServerInfoResponsePacket);
         } else {
             PrivateGameServer server;
@@ -56,6 +57,7 @@ public class GameServerInfoRequestPacket extends DataPacket
             gameServerInfoResponsePacket.isStatic = server.getTemplate().getStatic();
             gameServerInfoResponsePacket.playerCount = server.getPlayerCount();
             gameServerInfoResponsePacket.maxPlayer = server.getTemplate().getMaxPlayers();
+            gameServerInfoResponsePacket.isStatic = server.getTemplate().getStatic();
             BedrockCloud.getPrivateGameServerProvider().getGameServer(jsonObject.get("serverName").toString()).pushPacket(gameServerInfoResponsePacket);
         }
     }
