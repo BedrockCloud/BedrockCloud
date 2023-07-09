@@ -2,6 +2,7 @@ package com.bedrockcloud.bedrockcloud;
 
 import com.bedrockcloud.bedrockcloud.files.Startfiles;
 import com.bedrockcloud.bedrockcloud.port.PortValidator;
+import com.bedrockcloud.bedrockcloud.utils.Utils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -9,7 +10,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-@VersionInfo(name = "BedrockCloud", version = "3.1.5", developers = { "BedrockCloud" }, identifier = "@Stable")
+@VersionInfo(name = "BedrockCloud", version = "3.1.6", developers = { "BedrockCloud" }, identifier = "@Beta")
 public class CloudStarter {
     public static void main(String[] args) {
         try {
@@ -37,8 +38,8 @@ public class CloudStarter {
             Thread.currentThread().setName("BedrockCloud");
 
             try {
-                if (!Objects.requireNonNull(BedrockCloud.getVersion()).identifier().equals("@Beta")) {
-                    if (!Objects.equals(getVersion(), Objects.requireNonNull(BedrockCloud.getVersion()).version())) {
+                if (!Objects.requireNonNull(Utils.getVersion()).identifier().equals("@Beta")) {
+                    if (!Objects.equals(getVersion(), Objects.requireNonNull(Utils.getVersion()).version())) {
                         BedrockCloud.getLogger().info("§cYou are not using the latest version of BedrockCloud.");
                         BedrockCloud.getLogger().info("§aNewest version§f: §e" + getVersion());
                     } else {

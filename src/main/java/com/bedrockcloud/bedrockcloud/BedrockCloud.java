@@ -16,6 +16,7 @@ import com.bedrockcloud.bedrockcloud.server.proxy.ProxyServerProvider;
 import com.bedrockcloud.bedrockcloud.server.gameserver.GameServerProvider;
 import com.bedrockcloud.bedrockcloud.templates.TemplateProvider;
 import com.bedrockcloud.bedrockcloud.console.Logger;
+import com.bedrockcloud.bedrockcloud.utils.Utils;
 
 import java.net.URISyntaxException;
 import java.net.Socket;
@@ -56,9 +57,9 @@ public class BedrockCloud
         this.initProvider();
 
         CommandRegeistry.registerCommands();
-        BedrockCloud.networkManager = new NetworkManager((int) getConfig().getDouble("port"));
+        BedrockCloud.networkManager = new NetworkManager((int) Utils.getConfig().getDouble("port"));
 
-        if (BedrockCloud.getConfig().getBoolean("rest-enabled", true)) {
+        if (Utils.getConfig().getBoolean("rest-enabled", true)) {
             app = new App();
         } else {
             BedrockCloud.getLogger().warning("§cRestAPI is currently disabled. You can enable it in your cloud config.");
@@ -66,9 +67,9 @@ public class BedrockCloud
 
         getTemplateProvider().loadTemplates();
 
-        final Timer ttime = new Timer();
-        if (getConfig().getBoolean("auto-restart-cloud", false)) {
-            ttime.schedule(new RestartAllTask(), 1000L, 1000L);
+        final Timer restartTimer = new Timer();
+        if (Utils.getConfig().getBoolean("auto-restart-cloud", false)) {
+            restartTimer.schedule(new RestartAllTask(), 1000L, 1000L);
         }
 
         ServiceHelper.startAllProxies();
@@ -96,24 +97,12 @@ public class BedrockCloud
         BedrockCloud.commandManager.start();
     }
     
-    public static VersionInfo getVersion() {
-        return CloudStarter.class.isAnnotationPresent(VersionInfo.class) ? CloudStarter.class.getAnnotation(VersionInfo.class) : null;
-    }
-    
     public static TemplateProvider getTemplateProvider() {
         return BedrockCloud.templateProvider;
     }
     
     public static ProxyServerProvider getProxyServerProvider() {
         return BedrockCloud.proxyServerProvider;
-    }
-    
-    public static Config getConfig() {
-        return new Config("./local/config.yml", Config.YAML);
-    }
-
-    public static Config getTemplateConfig() {
-        return new Config("./templates/config.json", Config.JSON);
     }
     
     public static PacketHandler getPacketHandler() {
@@ -130,28 +119,5 @@ public class BedrockCloud
     
     public static CloudPlayerProvider getCloudPlayerProvider() {
         return BedrockCloud.cloudPlayerProvider;
-    }
-
-    public static String getCloudPath(){
-        try {
-            String path = BedrockCloud.class
-                    .getProtectionDomain()
-                    .getCodeSource()
-                    .getLocation()
-                    .toURI()
-                    .getPath();
-            String fullPath = path.substring(path.lastIndexOf("/") + 1);
-            return path.replace(fullPath, "");
-        } catch (NullPointerException | URISyntaxException e){
-            BedrockCloud.getLogger().exception(e);
-            return "";
-        }
-    }
-
-    public static void printCloudInfos() {
-        BedrockCloud.getLogger().command("Used Memory   :  " + (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) + " bytes");
-        BedrockCloud.getLogger().command("Free Memory   : " + Runtime.getRuntime().freeMemory() + " bytes");
-        BedrockCloud.getLogger().command("Total Memory  : " + Runtime.getRuntime().totalMemory() + " bytes");
-        BedrockCloud.getLogger().command("Max Memory    : " + Runtime.getRuntime().maxMemory() + " bytes");
     }
 }

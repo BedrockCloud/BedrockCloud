@@ -5,6 +5,7 @@ import com.bedrockcloud.bedrockcloud.config.Config;
 import com.bedrockcloud.bedrockcloud.server.gameserver.GameServer;
 import com.bedrockcloud.bedrockcloud.server.privategameserver.PrivateGameServer;
 import com.bedrockcloud.bedrockcloud.server.proxy.ProxyServer;
+import com.bedrockcloud.bedrockcloud.utils.Utils;
 
 import java.util.Objects;
 
@@ -39,9 +40,9 @@ public class ServerProperties {
             prop.set("xbox-auth", "off");
             prop.set("enable-ipv6", "off");
             prop.set("template", gameServer.getTemplate().getName());
-            prop.set("cloud-port", String.valueOf(BedrockCloud.getConfig().getDouble("port")));
-            prop.set("cloud-password", BedrockCloud.getConfig().getString("password"));
-            prop.set("cloud-path", BedrockCloud.getCloudPath());
+            prop.set("cloud-port", String.valueOf(Utils.getConfig().getDouble("port")));
+            prop.set("cloud-password", Utils.getConfig().getString("password"));
+            prop.set("cloud-path", Utils.getCloudPath());
             prop.set("is-private", false);
             prop.save();
         } catch (Throwable ignored) {}
@@ -76,9 +77,9 @@ public class ServerProperties {
             prop.set("xbox-auth", "off");
             prop.set("enable-ipv6", "off");
             prop.set("template", gameServer.getTemplate().getName());
-            prop.set("cloud-port", String.valueOf(BedrockCloud.getConfig().getDouble("port")));
-            prop.set("cloud-password", BedrockCloud.getConfig().getString("password"));
-            prop.set("cloud-path", BedrockCloud.getCloudPath());
+            prop.set("cloud-port", String.valueOf(Utils.getConfig().getDouble("port")));
+            prop.set("cloud-password", Utils.getConfig().getString("password"));
+            prop.set("cloud-path", Utils.getCloudPath());
             prop.set("is-private", true);
             prop.set("pserver-owner", gameServer.getServerOwner());
             prop.save();
@@ -92,12 +93,12 @@ public class ServerProperties {
         if (proxyServer.getTemplate().getMaintenance()) {
             proxy.set("listener.motd", "§c§oMaintenance");
         } else {
-            proxy.set("listener.motd", BedrockCloud.getConfig().getString("motd"));
+            proxy.set("listener.motd", Utils.getConfig().getString("motd"));
         }
-        proxy.set("use_login_extras", BedrockCloud.getConfig().get("wdpe-login-extras"));
+        proxy.set("use_login_extras", Utils.getConfig().get("wdpe-login-extras"));
         proxy.set("inject_proxy_commands", false);
         proxy.set("replace_username_spaces", true);
-        proxy.set("cloud-path", BedrockCloud.getCloudPath());
+        proxy.set("cloud-path", Utils.getCloudPath());
         proxy.save();
     }
 }
