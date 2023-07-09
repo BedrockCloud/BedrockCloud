@@ -12,6 +12,7 @@ import java.io.IOException;
 import com.bedrockcloud.bedrockcloud.server.gameserver.GameServer;
 import com.bedrockcloud.bedrockcloud.BedrockCloud;
 import com.bedrockcloud.bedrockcloud.command.Command;
+import com.bedrockcloud.bedrockcloud.utils.Utils;
 
 public class ServerCommand extends Command
 {
@@ -26,13 +27,13 @@ public class ServerCommand extends Command
                 int services = BedrockCloud.getGameServerProvider().getGameServerMap().size() + BedrockCloud.getPrivateGameServerProvider().getGameServerMap().size() + BedrockCloud.getProxyServerProvider().getProxyServerMap().size();
                 this.getLogger().info("§e»§r §7There are currently " + services + " Services online! §e«");
                 for (final GameServer gameServer : BedrockCloud.getGameServerProvider().gameServerMap.values()) {
-                    this.getLogger().info("§c➤ §rGameServer: " + gameServer.getServerName() + " | Players: " + gameServer.getPlayerCount() + " ᐅ " + gameServer.getTemplate().getName());
+                    this.getLogger().info("§c➤ §rGameServer: " + gameServer.getServerName() + " | Players: " + gameServer.getPlayerCount() + " ᐅ " + gameServer.getTemplate().getName() + " | Static: " + Utils.boolToString(gameServer.getTemplate().getStatic()));
                 }
                 for (final PrivateGameServer privateGameServer : BedrockCloud.getPrivateGameServerProvider().gameServerMap.values()) {
-                    this.getLogger().info("§c➤ §rPrivateGameServer: " + privateGameServer.getServerName() + " | Players: " + privateGameServer.getPlayerCount() + " ᐅ " + privateGameServer.getTemplate().getName());
+                    this.getLogger().info("§c➤ §rPrivateGameServer: " + privateGameServer.getServerName() + " | Players: " + privateGameServer.getPlayerCount() + " ᐅ " + privateGameServer.getTemplate().getName() + " | Static: " + Utils.boolToString(privateGameServer.getTemplate().getStatic()));
                 }
                 for (final ProxyServer proxyServer : BedrockCloud.getProxyServerProvider().proxyServerMap.values()) {
-                    this.getLogger().info("§c➤ §rProxyServer: " + proxyServer.getServerName() + " | Template: " + proxyServer.getTemplate().getName());
+                    this.getLogger().info("§c➤ §rProxyServer: " + proxyServer.getServerName() + " | Template: " + proxyServer.getTemplate().getName() + " | Static: " + Utils.boolToString(proxyServer.getTemplate().getStatic()));
                 }
             } else if (args.length > 1) {
                 if (args[0].equalsIgnoreCase("start")) {

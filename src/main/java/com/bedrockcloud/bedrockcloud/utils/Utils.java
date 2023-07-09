@@ -55,4 +55,8 @@ public class Utils {
     public static VersionInfo getVersion() {
         return CloudStarter.class.isAnnotationPresent(VersionInfo.class) ? CloudStarter.class.getAnnotation(VersionInfo.class) : null;
     }
+
+    public static String boolToString(Boolean bool){
+        return (bool ? "§aYes" : "§cNo");
+    }
 }
