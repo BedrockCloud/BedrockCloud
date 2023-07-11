@@ -21,7 +21,7 @@ public class CloudPlayerInfoRequestPacket extends DataPacket {
 
         GameServer server;
         boolean success;
-        if (jsonObject.get("playerName") == null || jsonObject.get("serverInfoName") == null) {
+        if (jsonObject.get("playerName") == null || jsonObject.get("serverName") == null) {
             success = false;
         } else
             success = BedrockCloud.getCloudPlayerProvider().getCloudPlayer(jsonObject.get("playerName").toString()) != null;
@@ -41,9 +41,9 @@ public class CloudPlayerInfoRequestPacket extends DataPacket {
         final boolean isPrivate = Boolean.parseBoolean(jsonObject.get("isPrivate").toString());
 
         if (!isPrivate) {
-            BedrockCloud.getGameServerProvider().getGameServer(jsonObject.get("serverInfoName").toString()).pushPacket(cloudPlayerInfoResponsePacket);
+            BedrockCloud.getGameServerProvider().getGameServer(jsonObject.get("serverName").toString()).pushPacket(cloudPlayerInfoResponsePacket);
         } else {
-            BedrockCloud.getPrivateGameServerProvider().getGameServer(jsonObject.get("serverInfoName").toString()).pushPacket(cloudPlayerInfoResponsePacket);
+            BedrockCloud.getPrivateGameServerProvider().getGameServer(jsonObject.get("serverName").toString()).pushPacket(cloudPlayerInfoResponsePacket);
         }
     }
 }
