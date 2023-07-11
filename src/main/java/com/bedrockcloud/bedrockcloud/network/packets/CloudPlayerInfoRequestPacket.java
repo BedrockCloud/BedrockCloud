@@ -21,16 +21,16 @@ public class CloudPlayerInfoRequestPacket extends DataPacket {
 
         GameServer server;
         boolean success;
-        if (jsonObject.get("playerName") == null || jsonObject.get("serverName") == null) {
+        if (jsonObject.get("playerInfoName") == null) {
             success = false;
         } else
-            success = BedrockCloud.getCloudPlayerProvider().getCloudPlayer(jsonObject.get("playerName").toString()) != null;
+            success = BedrockCloud.getCloudPlayerProvider().getCloudPlayer(jsonObject.get("playerInfoName").toString()) != null;
 
         CloudPlayer cloudPlayer;
 
         cloudPlayerInfoResponsePacket.success = success;
         if (success) {
-            if ((cloudPlayer = BedrockCloud.getCloudPlayerProvider().getCloudPlayer(jsonObject.get("playerName").toString())) != null) {
+            if ((cloudPlayer = BedrockCloud.getCloudPlayerProvider().getCloudPlayer(jsonObject.get("playerInfoName").toString())) != null) {
                 cloudPlayerInfoResponsePacket.name = cloudPlayer.getPlayerName();
                 cloudPlayerInfoResponsePacket.address = cloudPlayer.getAddress();
                 cloudPlayerInfoResponsePacket.xuid = cloudPlayer.getXuid();
@@ -38,8 +38,8 @@ public class CloudPlayerInfoRequestPacket extends DataPacket {
                 cloudPlayerInfoResponsePacket.currentProxy = cloudPlayer.getCurrentProxy();
             }
         }
-        final boolean isPrivate = Boolean.parseBoolean(jsonObject.get("isPrivate").toString());
 
+        final boolean isPrivate = Boolean.parseBoolean(jsonObject.get("isPrivate").toString());
         if (!isPrivate) {
             BedrockCloud.getGameServerProvider().getGameServer(jsonObject.get("serverName").toString()).pushPacket(cloudPlayerInfoResponsePacket);
         } else {
