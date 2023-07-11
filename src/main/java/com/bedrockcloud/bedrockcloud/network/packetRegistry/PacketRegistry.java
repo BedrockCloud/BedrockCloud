@@ -40,5 +40,7 @@ public class PacketRegistry {
         BedrockCloud.getPacketHandler().registerPacket("ListTemplatesResponsePacket", ListTemplatesResponsePacket.class);
         BedrockCloud.getPacketHandler().registerPacket("TemplateInfoRequestPacket", TemplateInfoRequestPacket.class);
         BedrockCloud.getPacketHandler().registerPacket("TemplateInfoResponsePacket", TemplateInfoResponsePacket.class);
+        BedrockCloud.getPacketHandler().registerPacket("CloudPlayerInfoRequestPacket", CloudPlayerInfoRequestPacket.class);
+        BedrockCloud.getPacketHandler().registerPacket("CloudPlayerInfoResponsePacket", CloudPlayerInfoResponsePacket.class);
     }
 }
